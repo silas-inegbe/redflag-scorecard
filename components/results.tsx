@@ -6,6 +6,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { RefreshCw, Share2, Download, ClipboardCopy, BadgeCheck } from "lucide-react"
 import { generateResultImage, downloadImage } from "@/lib/image-generator"
+import ReactMarkdown from "react-markdown"
 
 interface ResultsProps {
   result: QuizResult
@@ -224,7 +225,22 @@ export default function Results({ result, onRestart }: ResultsProps) {
                   )}
                 </Button>
               </div>
-              <p className="text-white text-lg leading-relaxed">{roast}</p>
+              <ReactMarkdown
+                components={{
+                  p: ({ node, ...props }) => (
+                    <p className="text-white text-lg leading-relaxed mb-4" {...props} />
+                  ),
+                  strong: ({ node, ...props }) => (
+                    <strong className="font-semibold text-yellow-300" {...props} />
+                  ),
+                  em: ({ node, ...props }) => (
+                    <em className="italic text-gray-300" {...props} />
+                  ),
+                  br: () => <br />,
+                }}
+              >
+                {roast}
+              </ReactMarkdown>
             </div>
           )}
         </motion.div>
@@ -280,7 +296,7 @@ export default function Results({ result, onRestart }: ResultsProps) {
           transition={{ delay: 1 }}
           className="text-center mt-6 text-gray-500 text-sm"
         >
-          Scanned by redflagscorecard.com 🚩
+          Scanned by RED-FLAG SCORECARD (www.myredflag.site) 🚩
         </motion.div>
       </div>
     </motion.div>
