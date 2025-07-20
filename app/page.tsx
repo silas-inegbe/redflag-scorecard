@@ -125,7 +125,7 @@ export default function Home() {
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                      className="text-8xl mb-6"
+                      className="text-4xl sm:text-5xl md:text-6xl mb-4 sm:mb-6"
                     >
                       🚩
                     </motion.div>
@@ -134,7 +134,7 @@ export default function Home() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.4 }}
-                      className="text-5xl font-bold text-white mb-4 leading-tight"
+                      className="text-5xl sm:text-5xl md:text-6xl font-bold text-white mb-4 leading-tight"
                     >
                       Red Flag
                       <span className="bg-gradient-to-r from-red-500 to-pink-500 bg-clip-text text-transparent">
@@ -147,7 +147,7 @@ export default function Home() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.6 }}
-                      className="text-xl text-gray-300 mb-8 leading-relaxed"
+                      className="text-xl text-gray-300 mb-6 sm:mb-8 leading-relaxed"
                     >
                       Think you're relationship material? Let's find out how many red flags you're serving 💅
                     </motion.p>
@@ -196,15 +196,15 @@ export default function Home() {
 
           {/* Footer */}
           <footer className="w-full absolute bottom-2 left-0 flex justify-center z-20">
-            <p className="text-xs text-gray-400">
-              created with <span role="img" aria-label="love">❤️</span> by{' '}
+            <p className="text-[15px] text-gray-400">
+              Created with <span role="img" aria-label="love">❤️</span> by{' '}
               <a
                 href="https://www.silasinegbe.me"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline hover:text-pink-400 transition-colors"
               >
-                silas
+                Silas
               </a>
             </p>
           </footer>

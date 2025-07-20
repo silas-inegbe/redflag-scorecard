@@ -139,71 +139,74 @@ export default function Results({ result, onRestart }: ResultsProps) {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className="w-full max-w-lg mx-auto"
-    >
-      <div className="bg-gradient-to-br from-gray-900/95 to-gray-800/95 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-gray-700/50">
-        {/* Flag Counter */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="text-center mb-6"
-        >
-          <div className="flex justify-center space-x-6 mb-4">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-red-500">{result.redFlags}</div>
-              <div className="text-sm text-red-400">🚩 Red</div>
+    <div className="min-h-screen flex items-center justify-center p-4">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="w-full max-w-md mx-auto"
+      >
+        <div className="bg-gradient-to-br from-gray-900/95 to-gray-800/95 backdrop-blur-lg rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-2xl border border-gray-700/50">
+          {/* Flag Counter */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-center mb-4 sm:mb-6"
+          >
+            <div className="flex justify-center space-x-4 sm:space-x-6 mb-3 sm:mb-4">
+              <div className="text-center">
+                <div className="text-2xl sm:text-3xl font-bold text-red-500">{result.redFlags}</div>
+                <div className="text-xs sm:text-sm text-red-400">🚩 Red</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl sm:text-3xl font-bold text-yellow-500">{result.yellowFlags}</div>
+                <div className="text-xs sm:text-sm text-yellow-400">⚠️ Yellow</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl sm:text-3xl font-bold text-green-500">{result.greenFlags}</div>
+                <div className="text-xs sm:text-sm text-green-400">✅ Green</div>
+              </div>
             </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-yellow-500">{result.yellowFlags}</div>
-              <div className="text-sm text-yellow-400">⚠️ Yellow</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-green-500">{result.greenFlags}</div>
-              <div className="text-sm text-green-400">✅ Green</div>
-            </div>
-          </div>
-        </motion.div>
+          </motion.div>
 
-        {/* Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="text-center mb-6"
-        >
-          <h2 className="text-3xl font-bold text-white mb-3 leading-tight">{result.title}</h2>
-          <p className="text-gray-300 text-lg">{result.description}</p>
-        </motion.div>
+          {/* Title */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="text-center mb-4 sm:mb-6"
+          >
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 sm:mb-3 leading-tight px-2">
+              {result.title}
+            </h2>
+            <p className="text-gray-300 text-sm sm:text-base md:text-lg px-2 leading-relaxed">{result.description}</p>
+          </motion.div>
 
-        {/* AI Roast Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="mb-8"
-        >
-          {!roast ? (
-            <Button
-              onClick={generateRoast}
-              disabled={isGenerating}
-              className="w-full bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white font-semibold py-4 rounded-2xl transition-all duration-300"
-            >
-              {isGenerating ? (
-                <>
-                  <RefreshCw className="w-5 h-5 mr-2 animate-spin" />
-                  Generating your roast...
-                </>
-              ) : (
-                <>🔥 Get Your AI Roast</>
-              )}
-            </Button>
-          ) : (
-            <div className="bg-gray-800/50 rounded-2xl p-6 border border-gray-600/50">
+          {/* AI Roast Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="mb-6 sm:mb-8"
+          >
+            {!roast ? (
+              <Button
+                onClick={generateRoast}
+                disabled={isGenerating}
+                className="w-full bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white font-semibold py-3 sm:py-4 rounded-xl sm:rounded-2xl transition-all duration-300 text-sm sm:text-base"
+              >
+                {isGenerating ? (
+                  <>
+                    <RefreshCw className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-spin" />
+                    Generating your roast...
+                  </>
+                ) : (
+                  <>🔥 Get Your AI Roast</>
+                )}
+              </Button>
+            ) : (
+              <div className="bg-gray-800/50 rounded-2xl p-6 border border-gray-600/50">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-red-400 font-semibold">🤖 AI Roast:</span>
                 <Button
@@ -242,63 +245,64 @@ export default function Results({ result, onRestart }: ResultsProps) {
                 {roast}
               </ReactMarkdown>
             </div>
-          )}
-        </motion.div>
+            )}
+          </motion.div>
 
-        {/* Action Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-          className="space-y-4"
-        >
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Button
-              onClick={handleDownload}
-              disabled={isDownloading}
-              className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-4 rounded-2xl transition-all duration-300"
-            >
-              {isDownloading ? (
-                <>
-                  <RefreshCw className="w-5 h-5 mr-2 animate-spin" />
-                  Generating...
-                </>
-              ) : (
-                <>
-                  <Download className="w-5 h-5 mr-2" />
-                  Download Image
-                </>
-              )}
-            </Button>
-
-            <Button
-              onClick={shareResult}
-              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-4 rounded-2xl transition-all duration-300"
-            >
-              <Share2 className="w-5 h-5 mr-2" />
-              Share Results
-            </Button>
-          </div>
-
-          <Button
-            onClick={onRestart}
-            variant="outline"
-            className="w-full border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white py-4 rounded-2xl transition-all duration-300 bg-transparent"
+          {/* Action Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
+            className="space-y-3 sm:space-y-4"
           >
-            Take Quiz Again
-          </Button>
-        </motion.div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <Button
+                onClick={handleDownload}
+                disabled={isDownloading}
+                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-3 sm:py-4 rounded-xl sm:rounded-2xl transition-all duration-300 text-sm sm:text-base"
+              >
+                {isDownloading ? (
+                  <>
+                    <RefreshCw className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-spin" />
+                    Generating...
+                  </>
+                ) : (
+                  <>
+                    <Download className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                    Download Image
+                  </>
+                )}
+              </Button>
 
-        {/* Watermark */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="text-center mt-6 text-gray-500 text-sm"
-        >
-          Scanned by RED-FLAG SCORECARD (www.myredflag.site) 🚩
-        </motion.div>
-      </div>
-    </motion.div>
+              <Button
+                onClick={shareResult}
+                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-3 sm:py-4 rounded-xl sm:rounded-2xl transition-all duration-300 text-sm sm:text-base"
+              >
+                <Share2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                Share Results
+              </Button>
+            </div>
+
+            <Button
+              onClick={onRestart}
+              variant="outline"
+              className="w-full border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white py-3 sm:py-4 rounded-xl sm:rounded-2xl transition-all duration-300 bg-transparent text-sm sm:text-base"
+            >
+              Take Quiz Again
+            </Button>
+          </motion.div>
+
+          {/* Watermark */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1 }}
+            className="text-center mt-4 sm:mt-6 text-gray-500 text-xs sm:text-sm"
+          >
+            Scanned by redflagscorecard.com 🚩
+          </motion.div>
+        </div>
+      </motion.div>
+    </div>
   )
 }

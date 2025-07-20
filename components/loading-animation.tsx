@@ -51,13 +51,13 @@ export default function LoadingAnimation({ onComplete }: LoadingAnimationProps) 
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
-      className="fixed inset-0 z-50 bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900 flex items-center justify-center"
+      className="fixed inset-0 z-50 bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900 flex items-center justify-center p-4"
       style={{ willChange: "opacity" }}
     >
-      {/* Simplified Background Effects - Less intensive */}
+      {/* Reduced Background Effects */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
-          animate={{ opacity: [0.05, 0.1, 0.05] }}
+          animate={{ opacity: [0.02, 0.05, 0.02] }}
           transition={{
             duration: 4,
             repeat: Number.POSITIVE_INFINITY,
@@ -67,7 +67,7 @@ export default function LoadingAnimation({ onComplete }: LoadingAnimationProps) 
           style={{ willChange: "opacity" }}
         />
         <motion.div
-          animate={{ opacity: [0.1, 0.05, 0.1] }}
+          animate={{ opacity: [0.05, 0.02, 0.05] }}
           transition={{
             duration: 4,
             repeat: Number.POSITIVE_INFINITY,
@@ -79,106 +79,159 @@ export default function LoadingAnimation({ onComplete }: LoadingAnimationProps) 
         />
       </div>
 
-      <div className="relative z-10 text-center px-4 max-w-lg mx-auto">
-        {!showFinalAnimation ? (
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentMessageIndex}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="flex flex-col items-center space-y-6"
-              style={{ willChange: "transform, opacity" }}
-            >
-              {/* Simplified Emoji Animation */}
+      {/* Subtle Dark Card Container - Reduced Opacity */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="relative z-10 w-full max-w-lg mx-auto"
+        style={{ willChange: "transform, opacity" }}
+      >
+        <div className="bg-gradient-to-br from-gray-900/20 to-gray-800/20 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-8 sm:p-12 shadow-2xl border border-gray-700/10">
+          {/* Very subtle inner glow effect */}
+          <div className="absolute inset-0 bg-gradient-to-br from-red-500/2 to-purple-500/2 rounded-2xl sm:rounded-3xl" />
+
+          <div className="relative z-10 text-center">
+            {!showFinalAnimation ? (
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentMessageIndex}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="flex flex-col items-center space-y-6 sm:space-y-8"
+                  style={{ willChange: "transform, opacity" }}
+                >
+                  {/* Clean Emoji Animation - No Blur */}
+                  <motion.div
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.1, duration: 0.3, ease: "easeOut" }}
+                    className="text-6xl sm:text-7xl md:text-8xl relative"
+                    style={{ willChange: "transform, opacity" }}
+                  >
+                    {/* Very subtle glow behind emoji */}
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-r ${currentMessage.color} opacity-5 blur-xl rounded-full scale-125`}
+                    />
+                    <span className="relative z-10">{currentMessage.emoji}</span>
+                  </motion.div>
+
+                  {/* Clear Text Animation - No Blur Effects */}
+                  <motion.h1
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2, duration: 0.3 }}
+                    className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r ${currentMessage.color} bg-clip-text text-transparent leading-tight px-4`}
+                    style={{ willChange: "opacity" }}
+                  >
+                    {currentMessage.text}
+                  </motion.h1>
+
+                  {/* Clear Loading Dots */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4, duration: 0.2 }}
+                    className="flex space-x-2"
+                    style={{ willChange: "opacity" }}
+                  >
+                    {[0, 1, 2].map((i) => (
+                      <motion.div
+                        key={i}
+                        animate={{ opacity: [0.4, 1, 0.4] }}
+                        transition={{
+                          duration: 1.2,
+                          repeat: Number.POSITIVE_INFINITY,
+                          delay: i * 0.2,
+                          ease: "easeInOut",
+                        }}
+                        className="w-2 h-2 sm:w-3 sm:h-3 bg-white/80 rounded-full"
+                        style={{ willChange: "opacity" }}
+                      />
+                    ))}
+                  </motion.div>
+                </motion.div>
+              </AnimatePresence>
+            ) : (
               <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.1, duration: 0.3, ease: "easeOut" }}
-                className="text-6xl sm:text-7xl md:text-8xl"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="flex flex-col items-center space-y-6 sm:space-y-8"
                 style={{ willChange: "transform, opacity" }}
               >
-                {currentMessage.emoji}
-              </motion.div>
+                {/* Final Animation - Clean */}
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, ease: "easeInOut" }}
+                  className="text-6xl sm:text-7xl md:text-8xl relative"
+                  style={{ willChange: "transform" }}
+                >
+                  {/* Very subtle glow for final animation */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-red-500/8 to-pink-500/8 blur-2xl rounded-full scale-125" />
+                  <span className="relative z-10">🚩</span>
+                </motion.div>
 
-              {/* Optimized Text Animation */}
-              <motion.h1
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2, duration: 0.3 }}
-                className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r ${currentMessage.color} bg-clip-text text-transparent leading-tight px-4`}
-                style={{ willChange: "opacity" }}
-              >
-                {currentMessage.text}
-              </motion.h1>
+                <motion.h1
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.3 }}
+                  className="text-2xl sm:text-3xl md:text-4xl font-bold text-white px-4"
+                  style={{ willChange: "transform, opacity" }}
+                >
+                  Let's find out!
+                </motion.h1>
 
-              {/* Simplified Loading Dots */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.2 }}
-                className="flex space-x-2"
-                style={{ willChange: "opacity" }}
-              >
-                {[0, 1, 2].map((i) => (
+                {/* Clean Loading Bar */}
+                <div className="w-48 sm:w-64 h-2 bg-gray-700/30 rounded-full overflow-hidden border border-gray-600/20">
                   <motion.div
-                    key={i}
-                    animate={{ opacity: [0.3, 1, 0.3] }}
-                    transition={{
-                      duration: 1.2,
-                      repeat: Number.POSITIVE_INFINITY,
-                      delay: i * 0.2,
-                      ease: "easeInOut",
-                    }}
-                    className="w-2 h-2 sm:w-3 sm:h-3 bg-white/50 rounded-full"
-                    style={{ willChange: "opacity" }}
+                    initial={{ width: "0%" }}
+                    animate={{ width: "100%" }}
+                    transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
+                    className="h-full bg-gradient-to-r from-red-500 to-pink-500 rounded-full"
+                    style={{ willChange: "width" }}
                   />
-                ))}
+                  {/* Subtle shine effect - reduced opacity */}
+                  <motion.div
+                    initial={{ x: "-100%" }}
+                    animate={{ x: "100%" }}
+                    transition={{ delay: 0.5, duration: 0.6, ease: "easeInOut" }}
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12"
+                    style={{ willChange: "transform" }}
+                  />
+                </div>
               </motion.div>
-            </motion.div>
-          </AnimatePresence>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="flex flex-col items-center space-y-6"
-            style={{ willChange: "transform, opacity" }}
-          >
-            {/* Final Animation - Simplified */}
+            )}
+          </div>
+        </div>
+
+        {/* Reduced floating particles */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[...Array(4)].map((_, i) => (
             <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 1, ease: "easeInOut" }}
-              className="text-6xl sm:text-7xl md:text-8xl"
-              style={{ willChange: "transform" }}
-            >
-              🚩
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.3 }}
-              className="text-2xl sm:text-3xl md:text-4xl font-bold text-white px-4"
-              style={{ willChange: "transform, opacity" }}
-            >
-              Let's find out!
-            </motion.h1>
-
-            {/* Simplified Loading Bar */}
-            <div className="w-48 sm:w-64 h-1 bg-gray-700 rounded-full overflow-hidden">
-              <motion.div
-                initial={{ width: "0%" }}
-                animate={{ width: "100%" }}
-                transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
-                className="h-full bg-gradient-to-r from-red-500 to-pink-500 rounded-full"
-                style={{ willChange: "width" }}
-              />
-            </div>
-          </motion.div>
-        )}
-      </div>
+              key={i}
+              animate={{
+                y: [-20, -40, -20],
+                opacity: [0.05, 0.15, 0.05],
+              }}
+              transition={{
+                duration: 3 + i * 0.5,
+                repeat: Number.POSITIVE_INFINITY,
+                ease: "easeInOut",
+                delay: i * 0.8,
+              }}
+              className="absolute w-1 h-1 bg-white/10 rounded-full"
+              style={{
+                left: `${20 + i * 15}%`,
+                top: `${60 + (i % 2) * 20}%`,
+                willChange: "transform, opacity",
+              }}
+            />
+          ))}
+        </div>
+      </motion.div>
     </motion.div>
   )
 }
