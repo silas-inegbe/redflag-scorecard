@@ -69,18 +69,18 @@ export default function Results({ result, onRestart }: ResultsProps) {
     const shareUrl = window.location.origin
 
     // Try native sharing first (mobile devices)
-    if (navigator.share && navigator.canShare) {
-      try {
-        await navigator.share({
-          title: "My Red Flag Scorecard Results",
-          text: shareText,
-          url: shareUrl,
-        })
-        return
-      } catch (error) {
-        console.log("Native sharing failed, falling back to alternatives")
-      }
-    }
+    // if (navigator.share && navigator.canShare) {
+    //   try {
+    //     await navigator.share({
+    //       title: "My Red Flag Scorecard Results",
+    //       text: shareText,
+    //       url: shareUrl,
+    //     })
+    //     return
+    //   } catch (error) {
+    //     console.log("Native sharing failed, falling back to alternatives")
+    //   }
+    // }
 
     // Fallback options for desktop/unsupported devices
     const encodedText = encodeURIComponent(shareText)
