@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import type { QuizResult } from "@/lib/types"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { RefreshCw, Share2, Download } from "lucide-react"
+import { RefreshCw, Share2, Download, ClipboardCopy, BadgeCheck } from "lucide-react"
 import { generateResultImage, downloadImage } from "@/lib/image-generator"
 
 interface ResultsProps {
@@ -16,6 +16,24 @@ export default function Results({ result, onRestart }: ResultsProps) {
   const [roast, setRoast] = useState<string>("")
   const [isGenerating, setIsGenerating] = useState(false)
   const [isDownloading, setIsDownloading] = useState(false)
+  // State to manage the button's appearance
+  const [isCopied, setIsCopied] = useState(false);
+
+  // Function to copy text to the clipboard
+  const handleCopy = async () => {
+    if (roast) {
+      try {
+        await navigator.clipboard.writeText(roast);
+        setIsCopied(true);
+        // Reset the button state after 2 seconds
+        setTimeout(() => {
+          setIsCopied(false);
+        }, 2000);
+      } catch (err) {
+        console.error("Failed to copy text: ", err);
+      }
+    }
+  };
 
   const generateRoast = async () => {
     setIsGenerating(true)
@@ -75,31 +93,31 @@ export default function Results({ result, onRestart }: ResultsProps) {
     <div class="bg-gray-800 rounded-2xl p-6 m-4 max-w-sm w-full">
       <h3 class="text-white text-xl font-bold mb-4 text-center">Share Your Results</h3>
       <div class="space-y-3">
-        <button 
+        <button
           onclick="window.open('https://twitter.com/intent/tweet?text=${encodedText}', '_blank'); document.body.removeChild(this.closest('.fixed'))"
           class="w-full bg-black hover:bg-gray-800 text-white py-3 px-4 rounded-xl font-semibold transition-colors duration-200"
         >
           Twitter/X
         </button>
-        <button 
+        <button
           onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}', '_blank'); document.body.removeChild(this.closest('.fixed'))"
           class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-xl font-semibold transition-colors duration-200"
         >
           Facebook
         </button>
-        <button 
+        <button
           onclick="window.open('https://wa.me/?text=${encodedText}', '_blank'); document.body.removeChild(this.closest('.fixed'))"
           class="w-full bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-xl font-semibold transition-colors duration-200"
         >
           WhatsApp
         </button>
-        <button 
+        <button
           onclick="navigator.clipboard.writeText('${shareText.replace(/'/g, "\\'")}'); alert('Results copied to clipboard! 📋'); document.body.removeChild(this.closest('.fixed'))"
           class="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 px-4 rounded-xl font-semibold transition-colors duration-200"
         >
           Copy Link
         </button>
-        <button 
+        <button
           onclick="document.body.removeChild(this.closest('.fixed'))"
           class="w-full bg-gray-600 hover:bg-gray-700 text-white py-3 px-4 rounded-xl font-semibold transition-colors duration-200"
         >
@@ -188,13 +206,22 @@ export default function Results({ result, onRestart }: ResultsProps) {
               <div className="flex items-center justify-between mb-3">
                 <span className="text-red-400 font-semibold">🤖 AI Roast:</span>
                 <Button
-                  onClick={generateRoast}
-                  disabled={isGenerating}
+                  onClick={handleCopy}
+                  disabled={isCopied || !roast} // Disable if text is empty or already copied
                   variant="ghost"
                   size="sm"
-                  className="text-gray-400 hover:text-white"
+                  className="text-gray-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <RefreshCw className={`w-4 h-4 ${isGenerating ? "animate-spin" : ""}`} />
+                  {isCopied ? (
+                    <>
+                      <BadgeCheck className="w-4 h-4 mr-2 text-green-500" />
+                      <span className="text-green-500">Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <ClipboardCopy className="w-4 h-4" />
+                    </>
+                  )}
                 </Button>
               </div>
               <p className="text-white text-lg leading-relaxed">{roast}</p>

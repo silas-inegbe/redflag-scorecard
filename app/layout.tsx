@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: "Red Flag Scorecard - How Many Red Flags Are You Serving?",
     description: "Take the savage relationship quiz that roasts your dating habits with AI-powered humor!",
     type: "website",
-    url: "https://redflagscorecard.com",
+    url: "https://www.myredflag.site",
   },
   twitter: {
     card: "summary_large_image",

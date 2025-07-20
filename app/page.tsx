@@ -98,7 +98,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
-          className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900 flex items-center justify-center p-4"
+          className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900 flex items-center justify-center p-4 relative"
         >
           {/* Background Effects */}
           <div className="absolute inset-0 overflow-hidden">
@@ -193,6 +193,21 @@ export default function Home() {
               )}
             </AnimatePresence>
           </div>
+
+          {/* Footer */}
+          <footer className="w-full absolute bottom-2 left-0 flex justify-center z-20">
+            <p className="text-xs text-gray-400">
+              created with <span role="img" aria-label="love">❤️</span> by{' '}
+              <a
+                href="https://www.silasinegbe.me"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-pink-400 transition-colors"
+              >
+                silas
+              </a>
+            </p>
+          </footer>
         </motion.div>
       )}
     </>
