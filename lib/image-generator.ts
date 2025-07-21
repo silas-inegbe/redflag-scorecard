@@ -141,7 +141,7 @@ export async function generateResultImage(result: QuizResult): Promise<string> {
     ctx.fillStyle = "#6b7280" // gray-500
     ctx.font = "bold 28px Arial, sans-serif"
     ctx.textAlign = "center"
-    ctx.fillText("Scanned by redflagscorecard.com 🚩", canvas.width / 2, canvas.height - 80)
+    ctx.fillText("Scanned by myredflag.site 🚩", canvas.width / 2, canvas.height - 80)
 
     // Convert to data URL with high quality
     const dataURL = canvas.toDataURL("image/png", 0.95)

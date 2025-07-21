@@ -107,6 +107,21 @@ export default function Home() {
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-pink-500/5 rounded-full blur-3xl" />
           </div>
 
+          {/* watermark */}
+          <p className="text-[15px] text-gray-800 absolute top-2 right-4">
+            Created with <span role="img" aria-label="love">❤️</span> by{' '}
+            <a
+              href="https://www.silasinegbe.me"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-pink-400 transition-colors"
+            >
+              Silas
+            </a>
+          </p>
+
+
+          {/* main content */}
           <div className="relative z-10 w-full max-w-2xl">
             <AnimatePresence mode="wait">
               {showGenderSelection && <GenderSelection key="gender-selection" onSelect={handleGenderSelect} />}
@@ -194,20 +209,6 @@ export default function Home() {
             </AnimatePresence>
           </div>
 
-          {/* Footer */}
-          <footer className="w-full absolute bottom-2 left-0 flex justify-center z-20">
-            <p className="text-[15px] text-gray-400">
-              Created with <span role="img" aria-label="love">❤️</span> by{' '}
-              <a
-                href="https://www.silasinegbe.me"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:text-pink-400 transition-colors"
-              >
-                Silas
-              </a>
-            </p>
-          </footer>
         </motion.div>
       )}
     </>

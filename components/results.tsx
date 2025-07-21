@@ -299,7 +299,7 @@ export default function Results({ result, onRestart }: ResultsProps) {
             transition={{ delay: 1 }}
             className="text-center mt-4 sm:mt-6 text-gray-500 text-xs sm:text-sm"
           >
-            Scanned by redflagscorecard.com 🚩
+            Scanned by myredflag.site 🚩
           </motion.div>
         </div>
       </motion.div>
