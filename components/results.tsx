@@ -44,8 +44,19 @@ export default function Results({ result, onRestart }: ResultsProps) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(result),
       })
-      const data = await response.json()
-      setRoast(data.roast)
+      let data
+      try {
+        data = await response.json()
+      } catch (jsonErr) {
+        setRoast("Even our AI is speechless... and that's saying something 💀")
+        setIsGenerating(false)
+        return
+      }
+      if (!response.ok || !data.roast) {
+        setRoast("Even our AI is speechless... and that's saying something 💀")
+      } else {
+        setRoast(data.roast)
+      }
     } catch (error) {
       console.error("Error generating roast:", error)
       setRoast("Even our AI is speechless... and that's saying something 💀")
@@ -207,44 +218,44 @@ export default function Results({ result, onRestart }: ResultsProps) {
               </Button>
             ) : (
               <div className="bg-gray-800/50 rounded-2xl p-6 border border-gray-600/50">
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-red-400 font-semibold">🤖 AI Roast:</span>
-                <Button
-                  onClick={handleCopy}
-                  disabled={isCopied || !roast} // Disable if text is empty or already copied
-                  variant="ghost"
-                  size="sm"
-                  className="text-gray-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-red-400 font-semibold">🤖 AI Roast:</span>
+                  <Button
+                    onClick={handleCopy}
+                    disabled={isCopied || !roast} // Disable if text is empty or already copied
+                    variant="ghost"
+                    size="sm"
+                    className="text-gray-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isCopied ? (
+                      <>
+                        <BadgeCheck className="w-4 h-4 mr-2 text-green-500" />
+                        <span className="text-green-500">Copied!</span>
+                      </>
+                    ) : (
+                      <>
+                        <ClipboardCopy className="w-4 h-4" />
+                      </>
+                    )}
+                  </Button>
+                </div>
+                <ReactMarkdown
+                  components={{
+                    p: ({ node, ...props }) => (
+                      <p className="text-white text-lg leading-relaxed mb-4" {...props} />
+                    ),
+                    strong: ({ node, ...props }) => (
+                      <strong className="font-semibold text-yellow-300" {...props} />
+                    ),
+                    em: ({ node, ...props }) => (
+                      <em className="italic text-gray-300" {...props} />
+                    ),
+                    br: () => <br />,
+                  }}
                 >
-                  {isCopied ? (
-                    <>
-                      <BadgeCheck className="w-4 h-4 mr-2 text-green-500" />
-                      <span className="text-green-500">Copied!</span>
-                    </>
-                  ) : (
-                    <>
-                      <ClipboardCopy className="w-4 h-4" />
-                    </>
-                  )}
-                </Button>
+                  {roast}
+                </ReactMarkdown>
               </div>
-              <ReactMarkdown
-                components={{
-                  p: ({ node, ...props }) => (
-                    <p className="text-white text-lg leading-relaxed mb-4" {...props} />
-                  ),
-                  strong: ({ node, ...props }) => (
-                    <strong className="font-semibold text-yellow-300" {...props} />
-                  ),
-                  em: ({ node, ...props }) => (
-                    <em className="italic text-gray-300" {...props} />
-                  ),
-                  br: () => <br />,
-                }}
-              >
-                {roast}
-              </ReactMarkdown>
-            </div>
             )}
           </motion.div>
 

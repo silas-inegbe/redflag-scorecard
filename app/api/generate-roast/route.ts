@@ -23,18 +23,24 @@ export async function POST(request: NextRequest) {
       : `Examples for males: "Bro really said 'I'm not like other guys' then proceeded to be exactly like other guys 💀"
     Examples for females: "Bestie really said 'I'm not like other girls' then proceeded to be exactly like other girls 💀"`}`;
 
+    const keys = [
+      process.env.OPENROUTER_API_KEY,
+      process.env.OPENROUTER_API_KEY2,
+    ];
 
+    // Randomly pick one key
+    const selectedKey = keys[Math.floor(Math.random() * keys.length)];
 
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`, // Store your key in .env.local
-        "HTTP-Referer": "https://www.myredflag.site", // optional, helps with model access
+        Authorization: `Bearer ${selectedKey}`,
+        "HTTP-Referer": "https://www.myredflag.site", // optional
         "X-Title": "Red flag detector", // optional
       },
       body: JSON.stringify({
-        model: "qwen/qwen3-32b:free", // or any other supported model
+        model: "qwen/qwen3-32b:free",
         messages: [
           {
             role: "user",
